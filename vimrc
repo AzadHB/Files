@@ -20,7 +20,6 @@ Plug 'ddollar/nerdcommenter'
 Plug 'godlygeek/tabular'
 Plug 'tpope/vim-markdown'
 
-
 " Initialize plugin system
 call plug#end()
  
@@ -55,7 +54,6 @@ set hlsearch                    "高亮搜索项"
 set expandtab
 set whichwrap+=<,>,h,l
 set autoread
-set paste
 syntax on
 
 "bobo begin
@@ -66,18 +64,22 @@ set ignorecase smartcase
 set incsearch
 set hlsearch 
 set showmatch
-set matchtime=2
 set hidden
 set smartindent
 set cmdheight=1
 set clipboard+=unnamed
 set scrolloff=3     " 光标移动到buffer的顶部和底部时保持3行距离
+set cindent shiftwidth=4
+set autoindent shiftwidth=4
+
+filetype plugin indent on
 
 " scheme molokai
 set t_Co=256
 colorscheme molokai
 
 " Tlist
+let Tlist_WinWidth=30
 let Tlist_Show_One_File=1     "不同时显示多个文件的tag，只显示当前文件的    
 let Tlist_Exit_OnlyWindow=1   "如果taglist窗口是最后一个窗口，则退出vim
 let Tlist_Show_Menu=1
@@ -89,7 +91,6 @@ let Tlist_Compact_Format=1
 let NERDTreeWinPos="right"
 
 " ctag
-filetype on
 let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
 set tags=tags;/
 set autochdir
@@ -97,10 +98,6 @@ set autochdir
 " ctrlp
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
-
-" omnicpp
-set nocp    
-filetype plugin on
 
 " cscope
 if has("cscope")
@@ -115,3 +112,43 @@ if has("cscope")
 		cs add cscope.out
 	endif
 endif
+
+" omnicppcomplete
+set wildmenu
+set completeopt=preview,menu 
+let OmniCpp_MayCompleteDot=1
+let OmniCpp_MayCompleteArrow=1
+let OmniCpp_MayCompleteScope=1
+let OmniCpp_SelectFirstItem=2
+let OmniCpp_NamespaceSearch=2
+let OmniCpp_ShowPrototypeInAbbr=1
+let OmniCpp_GlobalScopeSearch=1
+let OmniCpp_DisplayMode=1
+let OmniCpp_DefaultNamespaces=["std"]
+
+" Statusline
+set laststatus=2
+set statusline=
+set statusline+=%-3.3n
+set statusline+=%F\
+set statusline+=%h%m%r%w
+set statusline+=%k
+set statusline+=%=
+set statusline+=%-10.(%l,%c%V%)\ %<%P
+
+inoremap ( ()<ESC>i
+inoremap ) <c-r>=ClosePair(')')<CR>
+inoremap { {}<ESC>i<CR><ESC>V<O
+inoremap } <c-r>=ClosePair('}')<CR>
+inoremap [ []<ESC>i
+inoremap ] <c-r>=ClosePair(']')<CR>
+inoremap " ""<ESC>i
+inoremap ' ''<ESC>i
+function! ClosePair(char)
+    if getline('.')[col('.') - 1] == a:char
+		return "\<Right>"
+	else
+	    return a:char
+	endif
+endfunction
+
