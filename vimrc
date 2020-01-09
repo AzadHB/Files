@@ -19,6 +19,8 @@ Plug 'jlanzarotta/bufexplorer'
 Plug 'ddollar/nerdcommenter'
 Plug 'godlygeek/tabular'
 Plug 'tpope/vim-markdown'
+Plug 'vim-scripts/AutoComplPop'
+Plug 'vim-scripts/TagHighlight'
 
 " Initialize plugin system
 call plug#end()
@@ -74,6 +76,10 @@ set autoindent shiftwidth=4
 
 filetype plugin indent on
 
+set wildmenu
+set wildignore+=*.o,*~
+set suffixes+=.in,.a
+
 " scheme molokai
 set t_Co=256
 colorscheme molokai
@@ -114,7 +120,7 @@ if has("cscope")
 endif
 
 " omnicppcomplete
-set wildmenu
+set nocp
 set completeopt=preview,menu 
 let OmniCpp_MayCompleteDot=1
 let OmniCpp_MayCompleteArrow=1
@@ -136,19 +142,4 @@ set statusline+=%k
 set statusline+=%=
 set statusline+=%-10.(%l,%c%V%)\ %<%P
 
-inoremap ( ()<ESC>i
-inoremap ) <c-r>=ClosePair(')')<CR>
-inoremap { {}<ESC>i<CR><ESC>V<O
-inoremap } <c-r>=ClosePair('}')<CR>
-inoremap [ []<ESC>i
-inoremap ] <c-r>=ClosePair(']')<CR>
-inoremap " ""<ESC>i
-inoremap ' ''<ESC>i
-function! ClosePair(char)
-    if getline('.')[col('.') - 1] == a:char
-		return "\<Right>"
-	else
-	    return a:char
-	endif
-endfunction
 
