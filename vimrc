@@ -121,7 +121,7 @@ endif
 
 " omnicppcomplete
 set nocp
-set completeopt=preview,menu 
+set completeopt=preview,menu,longest 
 let OmniCpp_MayCompleteDot=1
 let OmniCpp_MayCompleteArrow=1
 let OmniCpp_MayCompleteScope=1
@@ -142,4 +142,47 @@ set statusline+=%k
 set statusline+=%=
 set statusline+=%-10.(%l,%c%V%)\ %<%P
 
+
+"-------------------------------------------------------------------------------
+" comma always followed by a space
+"-------------------------------------------------------------------------------
+inoremap  ,  ,<Space>
+"
+"-------------------------------------------------------------------------------
+" autocomplete parenthesis, brackets and braces
+"-------------------------------------------------------------------------------
+inoremap ( ()<Left>
+inoremap [ []<Left>
+inoremap { {}<Left>
+"
+vnoremap ( s()<Esc>P<Right>%
+vnoremap [ s[]<Esc>P<Right>%
+vnoremap { s{}<Esc>P<Right>%
+"
+"-------------------------------------------------------------------------------
+" autocomplete quotes (visual and select mode)
+"-------------------------------------------------------------------------------
+xnoremap  '  s''<Esc>P<Right>
+xnoremap  "  s""<Esc>P<Right>
+xnoremap  `  s``<Esc>P<Right>
+
+"-------------------------------------------------------------------------------
+" additional mapping : complete a classical C comment: '/*' => '/* | */'
+"-------------------------------------------------------------------------------
+inoremap  <buffer>  /*       /*<Space><Space>*/<Left><Left><Left>
+vnoremap  <buffer>  /*      s/*<Space><Space>*/<Left><Left><Left><Esc>p
+"
+"-------------------------------------------------------------------------------
+" additional mapping : complete a classical C multi-line comment: 
+"                      '/*<CR>' =>  /*
+"                                    * |
+"                                    */
+"-------------------------------------------------------------------------------
+inoremap  <buffer>  /*<CR>  /*<CR><CR>/<Esc>kA<Space>
+"
+"-------------------------------------------------------------------------------
+" additional mapping : {<CR> always opens a block
+"-------------------------------------------------------------------------------
+inoremap  <buffer>  {<CR>    {<CR>}<Esc>O
+vnoremap  <buffer>  {<CR>   S{<CR>}<Esc>Pk=iB
 
