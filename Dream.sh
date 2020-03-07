@@ -20,16 +20,17 @@ case $selectNum in
 	trainnum=(650 1800 \
 	800 1750\
 	950 1650)
-	buildnum=(300 1450 300 1150 300 900 \
-	500 700 500 950 500 1200 \
-	850 1000 850 750 850 500)
+    buildnum_x=(350 500 800)
+	buildnum_y=(1450 1150 900 \
+	700 950 1200 \
+	1000 750 500)
 	while ((1>0))
 	do
-		for((i=0;i<6;i+=2))
+		for((i=0;i<3;i++))
 		do
-			for((j=0;j<18;j+=2))
+			for((j=0;j<9;j++))
 			do
-				adb shell input swipe ${trainnum[i]} ${trainnum[i+1]} ${buildnum[j]} ${buildnum[j+1]}
+				adb shell input swipe ${trainnum[i*2]} ${trainnum[i*2+1]} ${buildnum_x[j/3]} ${buildnum_y[j]}
 			done
 		done
 	done
